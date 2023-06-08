@@ -2,15 +2,18 @@ using System;
 
 namespace Garage
 {
-    public class Tesla : Vehicle
+    public class Tesla : Vehicle, IElectricVehicle
     {
         public double BatteryKWh { get; set; }
         public string MainColor { get; set; }
         public int MaximumOccupancy { get; set; }
+        public double CurrentChargePercentage { get; set; }
+
 
         public void ChargeBattery()
         {
-            //method definition omitted
+            CurrentChargePercentage = 100;
+            Console.WriteLine($"The {MainColor} Tesla's battery is charged.");
         }
 
         public override void Drive()

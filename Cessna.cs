@@ -2,15 +2,18 @@ using System;
 
 namespace Garage
 {
-    public class Cessna : Vehicle
+    public class Cessna : Vehicle, IGasVehicle
     {
         public double FuelCapacity { get; set; }
         public string MainColor { get; set; }
         public int MaximumOccupancy { get; set; }
+        public double CurrentTankPercentage { get; set; }
+
 
         public void RefuelTank()
         {
-            // method definition omitted
+            CurrentTankPercentage = 100;
+            Console.WriteLine($"The {MainColor} Cessna's tank is full.");
         }
 
         public override void Drive()

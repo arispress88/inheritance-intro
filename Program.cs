@@ -1,52 +1,95 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Garage
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main (string[] args)
         {
             Zero fxs = new Zero()
             {
-                FuelCapacity = 100,
                 MainColor = "Red",
-                MaximumOccupancy = 2
+                CurrentChargePercentage = 50
+            };
+            Zero fx = new Zero()
+            {
+                MainColor = "Blue",
+                CurrentChargePercentage = 100
             };
             Tesla modelS = new Tesla()
             {
-                FuelCapacity = 48,
-                MainColor = "Dark Blue",
-                MaximumOccupancy = 5
+                MainColor = "Black",
+                CurrentChargePercentage = 70
             };
-            Cessna mx410 = new Cessna()
+
+            List<IElectricVehicle> electricVehicles = new List<IElectricVehicle>() {
+                fx, fxs, modelS
+            };
+
+            Console.WriteLine("Electric Vehicles");
+            foreach(IElectricVehicle ev in electricVehicles)
             {
-                FuelCapacity = 20,
+                Console.WriteLine($"{ev.CurrentChargePercentage}");
+            }
+
+            foreach(IElectricVehicle ev in electricVehicles)
+            {
+                if (ev.CurrentChargePercentage < 100)
+                {
+                    ev.ChargeBattery(); // This should charge the vehicle to 100%
+                }
+                else
+                {
+                    Console.WriteLine($"The {ev.MainColor} is already fully charged.");
+                }
+                
+            }
+
+            foreach(IElectricVehicle ev in electricVehicles)
+            {
+                Console.WriteLine($"{ev.CurrentChargePercentage}");
+            }
+
+            Console.WriteLine("***********************************************");
+
+            Ram ram = new Ram ()
+            {
+                MainColor = "Green",
+                CurrentTankPercentage = 30
+            };
+            Cessna cessna150 = new Cessna ()
+            {
                 MainColor = "Yellow",
-                MaximumOccupancy = 4
+                CurrentTankPercentage = 100
             };
-            Ram ram1500 = new Ram()
+
+            List<IGasVehicle> gasVehicles = new List<IGasVehicle>() {
+                ram, cessna150
+            };
+
+            Console.WriteLine("Gas Vehicles");
+            foreach(IGasVehicle gv in gasVehicles)
             {
-                FuelCapacity = 30,
-                MainColor = "Gold",
-                MaximumOccupancy = 5
-            };
+                Console.WriteLine($"{gv.CurrentTankPercentage}");
+            }
 
-            fxs.Drive();
-            fxs.Turn();
-            fxs.Stop();
- 
-            modelS.Drive();
-            modelS.Turn();
-            modelS.Stop();
+            foreach(IGasVehicle gv in gasVehicles)
+            {
+                if (gv.CurrentTankPercentage < 100)
+                {
+                    gv.RefuelTank(); // This should refill the tank to 100
+                }
+                else
+                {
+                    Console.WriteLine($"The {gv.MainColor} is already full of gas.");
+                }
+            }
 
-            mx410.Drive();
-            mx410.Turn();
-            mx410.Stop();
-
-            ram1500.Drive();
-            ram1500.Turn();
-            ram1500.Stop();
-
+            foreach(IGasVehicle gv in gasVehicles)
+            {
+                Console.WriteLine($"{gv.CurrentTankPercentage}");
+            }
         }
     }
 }
